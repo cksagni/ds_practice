@@ -8,6 +8,26 @@ Notice that the solution set must not contain duplicate triplets.
 """
 
 
+def three_sum_1(nums: List[int]) -> List[List[int]]:
+    triplets = set()
+    n = len(nums)
+    nums.sort()
+    for i in range(n):
+        left = i + 1
+        right = n - 1
+        target = 0 - nums[i]
+        while left < right:
+            if nums[left] + nums[right] == target:
+                triplets.add((nums[i], nums[left], nums[right]))
+                left += 1
+                right -= 1
+            elif nums[left] + nums[right] < target:
+                left += 1
+            else:
+                right -= 1
+    return [list(x) for x in triplets]
+
+
 def three_sum(nums: List[int]) -> List[List[int]]:
     elm_map = {}
     triplets = set()
@@ -32,20 +52,30 @@ def three_sum(nums: List[int]) -> List[List[int]]:
 if __name__ == "__main__":
     nums1 = [-1, 0, 1, 2, -1, -4]
     trip = three_sum(nums1)
+    trip_1 = three_sum_1(nums1)
     assert trip == [[-1, 0, 1], [-1, -1, 2]]
+    assert trip_1 == [[-1, 0, 1], [-1, -1, 2]]
 
     nums1 = [0, 1, 1]
     trip = three_sum(nums1)
+    trip_1 = three_sum_1(nums1)
     assert trip == []
+    assert trip_1 == []
 
     nums1 = [-1, 0, 1, 0]
     trip = three_sum(nums1)
+    trip_1 = three_sum_1(nums1)
     assert trip == [[-1, 0, 1]]
+    assert trip_1 == [[-1, 0, 1]]
 
     nums1 = [-2, 0, 0, 2, 2]
     trip = three_sum(nums1)
+    trip_1 = three_sum_1(nums1)
     assert trip == [[-2, 0, 2]]
+    assert trip_1 == [[-2, 0, 2]]
 
     nums1 = [3, 0, -2, -1, 1, 2]
     trip = three_sum(nums1)
+    trip_1 = three_sum_1(nums1)
     assert trip == [[-2, -1, 3], [-1, 0, 1], [-2, 0, 2]]
+    assert trip_1 == [[-2, -1, 3], [-1, 0, 1], [-2, 0, 2]]
